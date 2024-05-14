@@ -16,5 +16,5 @@ URScript is a python-based scripting launguage.
 1. From Main Panel select: `Program -> Adavnced -> Script`
 2. Add the script to the `Robot Program` and select the file containing the instructions
 <div align="center">
-    <img src="images/readme/01.png", width="300">
+    <img src="images/readme/01.png", width="500">
 </div>
