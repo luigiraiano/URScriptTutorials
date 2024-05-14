@@ -1,38 +1,34 @@
-def variableDefinition():
-	global pi = 3.14159265359
-	global HomePose_p=p[0, -0.3, .300000000000, -pi, 0, 0]
-	global HomePose_q=[-1.1105007472043038, -1.0205114293685416, -2.1851823557314756, -1.5070601453828907, 1.5709772751331845, -2.681297106812598]
-	
-	global AbovePick_p=p[0,0,0,0,0,0]	
-	global Pick_p=p[0.3, -0.5, 0.2, pi, 0, 0]
-	
-	global AbovePlace_p=p[0,0,0,0,0,0]	
-	global Place_p=p[0.3, 0.5, 0.2, pi, 0, 0]
-	
-	global pick_offset =p[0, 0, 0.1, 0, 0, 0]
-	global place_offset =p[0, 0, 0.1, 0, 0, 0]
-end
-
 def initialization():
 	# Set Current TCP
-	set_tcp(p[0.0,0.0,0.1,0.0,0.0,0.0])
-	
+	set_tcp(TCP_1)
+
+	# --- Picking Pose --- #
+	# Get Rot Angle for pick pose
+	Pick_rot = rpy2rotvec(Pick_xyz)
+
+	# Compose Pick Pose
+	Pick_p = p[Pick_pos[0], Pick_pos[1], Pick_pos[2], Pick_rot[0], Pick_rot[1], Pick_rot[2]]
+
 	# Compute Above Picking Pose
 	AbovePick_p = pose_add(Pick_p, pick_offset)
 	
+	# --- Placing Pose --- #
+	# Get Rot Angle for place pose
+	Place_rot = rpy2rotvec(Place_xyz)
+
+	# Compose Place Pose
+	Place_p = p[Place_pos[0],Place_pos[1], Place_pos[2], Place_rot[0], Place_rot[1], Place_rot[2]]	
+	
 	# Compute Above Placing Pose
-	AbovePlace_p = pose_add(Place_p, pick_offset)
+	AbovePlace_p = pose_add(Place_p, place_offset)
 	
 	movej(HomePose_q, a=1.2, v=0.2)
 end
 
 
-
 def main():
 
 	popup("Select OK for the Robot to Start the Task", "Message", False, False, blocking=True)
-	
-	variableDefinition()
 	
 	initialization()
 
@@ -42,25 +38,20 @@ def main():
 		set_standard_digital_out(0, False)
 	
 		movel(AbovePick_p, a=1.2, v=0.25, r=0.05)
-		sleep(0.5)
 	
 		movel(Pick_p, a=1.2, v=0.25)
 		sleep(0.5)
 		
 		movel(AbovePick_p, a=1.2, v=0.25, r=0.05)
-		sleep(0.5)
 	
 		movej(HomePose_q, a=1.2, v=0.2)
-		sleep(0.5)
 		
 		movel(AbovePlace_p, a=1.2, v=0.25, r=0.05)
-		sleep(0.5)
 	
 		movel(Place_p, a=1.2, v=0.25)
 		sleep(0.5)
 		
 		movel(AbovePlace_p, a=1.2, v=0.25, r=0.05)
-		sleep(0.5)
 		
 		movej(HomePose_q, a=1.2, v=0.2)
 		sleep(0.5)
