@@ -1,23 +1,31 @@
+def Pose6D(pos_vec, eulXYZ_vec) :
+	# Inputs
+	# pos_vec: 3x1 position vector; pos_vec = [pos_x, pos_y, pos_z]
+	# eulXYZ_vec: 3x1 Euler-XYZ vector; eulXYZ_vec = [eul_x, eul_y, eul_z]
+	# Outputs
+	# pose6D: 6x1 pose vector, where for the rotation part Rotation Angle is used as notation; pose6D = [pos_vec, rpy2rotvec(eulXYZ_vec)]
+
+	# Converts from Euler XYZ to Rotation Vector Notation
+	rot_vec = rpy2rotvec(eulXYZ_vec)
+
+	# Make up the pose vector
+	pose6d_vec = p[pos_vec[0], pos_vec[1], pos_vec[2], rot_vec[0], rot_vec[1], rot_vec[2]]
+
+	return pose6d_vec
+end
+
 def initialization():
 	# Set Current TCP
 	set_tcp(TCP_1)
 
-	# --- Picking Pose --- #
-	# Get Rot Angle for pick pose
-	Pick_rot = rpy2rotvec(Pick_xyz)
-
-	# Compose Pick Pose
-	Pick_p = p[Pick_pos[0], Pick_pos[1], Pick_pos[2], Pick_rot[0], Pick_rot[1], Pick_rot[2]]
+	# Set Picking Pose
+	Pick_p = Pose6D(Pick_pos, Pick_xyz)
 
 	# Compute Above Picking Pose
 	AbovePick_p = pose_add(Pick_p, pick_offset)
 	
-	# --- Placing Pose --- #
-	# Get Rot Angle for place pose
-	Place_rot = rpy2rotvec(Place_xyz)
-
-	# Compose Place Pose
-	Place_p = p[Place_pos[0],Place_pos[1], Place_pos[2], Place_rot[0], Place_rot[1], Place_rot[2]]	
+	# Set Placing Pose
+	Place_p = Pose6D(Place_pos, Place_xyz)
 	
 	# Compute Above Placing Pose
 	AbovePlace_p = pose_add(Place_p, place_offset)
