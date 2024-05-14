@@ -12,9 +12,30 @@ The URScript programming manual is available from the following link
 
 ## Guidelines
 URScript is a python-based scripting launguage.
+
+### Reference Frame
+The base frame in Polyscope is located according to the following picture
+<div align="center">
+    <img src="images/readme/00.png", width="700">
+</div>
+
 ### Adding a URScript to the Robot program
 1. From Main Panel select: `Program -> Advanced -> Script`
 2. Add the script to the `Robot Program` and select the file containing the instructions
 <div align="center">
     <img src="images/readme/01.png", width="700">
 </div>
+3. For convenience, add a script containing all global variables within a Before Start sequence
+<div align="center">
+    <img src="images/readme/02.png", width="700">
+</div>
+
+### Pose Vectors and Rotations in URScript
+A pose is declared using `p` before the `[]` (otherwise it is considered as a list). Example:
+```
+pose = p[pos_x, pos_y, pos_z, rotVec_x, rotVec_y, rotVec_z]
+```
+Note that the rotation is described using the Rotation Vector notation. If you want to set a desired Roll-Pitch-Yaw angle, please use the converting function:
+```
+r = p[pos_x, pos_y, pos_z, rotVec_x, rotVec_y, rotVec_z]
+```

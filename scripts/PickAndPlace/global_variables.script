@@ -1,0 +1,20 @@
+global pi = 3.14159265359
+
+global TCP_1 = p[0.0,0.0,0.1,0.0,0.0,0.0]
+
+global HomePose_p=p[0, -0.3, 0.4, -pi, 0, 0]
+global HomePose_q=[d2r(0), d2r(-60), d2r(-120), d2r(-90), d2r(90), d2r(-90)]
+
+global AbovePick_p=p[0,0,0,0,0,0]
+global Pick_pos=[0.4, -0.3, 0.2]
+global Pick_xyz=[pi, 0, -pi/2]
+global Pick_p=p[0, 0, 0, 0, 0, 0]
+
+global AbovePlace_p=p[0,0,0,0,0,0]
+global Place_pos=[0.4, 0.3, 0.2]
+global Place_xyz=[pi, 0, -pi/2]
+global Place_p=p[0, 0, 0, 0, 0, 0]
+
+global pick_offset =p[0, 0, 0.1, 0, 0, 0]
+global place_offset =p[0, 0, 0.1, 0, 0, 0]
+
